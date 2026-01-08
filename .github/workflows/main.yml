@@ -23,7 +23,26 @@ jobs:
         aws ecr get-login-password --region ap-south-1 \
         | docker login --username AWS --password-stdin 718159740586.dkr.ecr.ap-south-1.amazonaws.com
 
-    # 🔹 Backend
+    # 🔹 Backend (server)
     - name: Build & Push Backend
       run: |
-        docker build -t wanderlust-backe
+        docker build -t wanderlust-backend ./server
+        docker tag wanderlust-backend:latest 718159740586.dkr.ecr.ap-south-1.amazonaws.com/wanderlust:backend
+        docker push 718159740586.dkr.ecr.ap-south-1.amazonaws.com/wanderlust:backend
+
+    # 🔹 Frontend (client)
+    - name: Build & Push Frontend
+      run: |
+        docker build -t wanderlust-frontend ./client
+        docker tag wanderlust-frontend:latest 718159740586.dkr.ecr.ap-south-1.amazonaws.com/wanderlust:frontend
+        docker push 718159740586.dkr.ecr.ap-south-1.amazonaws.com/wanderlust:frontend
+
+    - name: Update kubeconfig
+      run: |
+        aws eks update-kubeconfig \
+          --region ap-south-1 \
+          --name my-cluster
+
+    - name: Deploy to EKS
+      run: |
+        kubectl apply -f k8s
