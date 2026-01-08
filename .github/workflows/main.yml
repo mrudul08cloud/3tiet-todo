@@ -26,16 +26,16 @@ jobs:
     # 🔹 Backend (server)
     - name: Build & Push Backend
       run: |
-        docker build -t wanderlust-backend ./server
-        docker tag wanderlust-backend:latest 718159740586.dkr.ecr.ap-south-1.amazonaws.com/wanderlust:backend
-        docker push 718159740586.dkr.ecr.ap-south-1.amazonaws.com/wanderlust:backend
+        docker build -t todo-backend ./server
+        docker tag todo-backend:latest 718159740586.dkr.ecr.ap-south-1.amazonaws.com/todo:backend
+        docker push 718159740586.dkr.ecr.ap-south-1.amazonaws.com/todo:backend
 
     # 🔹 Frontend (client)
     - name: Build & Push Frontend
       run: |
-        docker build -t wanderlust-frontend ./client
-        docker tag wanderlust-frontend:latest 718159740586.dkr.ecr.ap-south-1.amazonaws.com/wanderlust:frontend
-        docker push 718159740586.dkr.ecr.ap-south-1.amazonaws.com/wanderlust:frontend
+        docker build -t todo-frontend ./client
+        docker tag todo-frontend:latest 718159740586.dkr.ecr.ap-south-1.amazonaws.com/todo:frontend
+        docker push 718159740586.dkr.ecr.ap-south-1.amazonaws.com/todo:frontend
 
     - name: Update kubeconfig
       run: |
