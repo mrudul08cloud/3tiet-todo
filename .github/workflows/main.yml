@@ -43,8 +43,22 @@ jobs:
           --region ap-south-1 \
           --name my-cluster
 
+    # ✅ FIXED DEPLOY STEP
     - name: Deploy to EKS
       run: |
-        kubectl apply -f k8s/namespace.yaml
-        kubectl apply -f k8s/
+        set -e
 
+        echo "Applying namespace"
+        kubectl apply -f k8s/namespace.yaml
+
+        echo "Applying storage"
+        kubectl apply -f k8s/storageclass-gp3.yaml
+
+        echo "Deploying database"
+        kubectl apply -f k8s/database/
+
+        echo "Deploying backend"
+        kubectl apply -f k8s/backend/
+
+        echo "Deploying frontend"
+        kubectl apply -f k8s/frontend/
